@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Entreprise technologique : IA et automatisation, télécommunications, fibre optique, cybersécurité, traitement de données." />
+  <title>dnamsy — Ingénierie digitale, réseaux et sécurité</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Palette sobre et dynamique */
+      --bg: #0b0f1a;
+      --bg-soft: #0f1526;
+      --card: #121a2b;
+      --text: #e6eefc;
+      --muted: #9fb0d1;
+      --primary: #4da3ff;         /* Bleu tech */
+      --accent: #7e5bf7;           /* Violet tech */
+      --success: #00c389;          /* Vert dynamique */
+      --danger: #ff5f7a;           /* Pour états d'erreur */
+      --border: #1f2a45;
+      --grad-1: radial-gradient(1200px 600px at 10% -20%, #1b2a52 0%, transparent 60%),
+                radial-gradient(1000px 500px at 90% 120%, #281b52 0%, transparent 60%);
+      --shadow: 0 8px 24px rgba(2, 12, 36, 0.45);
+      --shadow-soft: 0 6px 16px rgba(5, 18, 52, 0.35);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px }
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(0deg, rgba(11,15,26,0.65), rgba(11,15,26,0.65));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.4px }
+    .brand-logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: conic-gradient(from 180deg, var(--primary), var(--accent), var(--success), var(--primary));
+      box-shadow: var(--shadow-soft);
+    }
+    .menu { display: flex; align-items: center; gap: 20px }
+    .menu a {
+      color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      padding: 10px 12px; border-radius: 10px;
+    }
+    .menu a:hover { background: #0c1427 }
+    .cta {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff; border: none; border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer;
+      box-shadow: var(--shadow-soft);
+    }
+    .hamburger { display: none; width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 10px; background: transparent; color: var(--text) }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 86px 0 60px;
+      background: var(--grad-1);
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      line-height: 1.08;
+      margin: 0 0 14px;
+    }
+    .hero p { color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.15rem) }
+    .hero .actions { display: flex; gap: 12px; margin-top: 22px }
+    .hero .ghost {
+      background: transparent; border: 1px solid var(--border); color: var(--text);
+      border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer;
+    }
+    .hero-card {
+      background: linear-gradient(180deg, #0f1629, #0c1424);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .stat {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .pulse {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--success);
+      box-shadow: 0 0 0 0 rgba(0,195,137,0.7);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,195,137,0.7) }
+      70% { box-shadow: 0 0 0 14px rgba(0,195,137,0) }
+      100% { box-shadow: 0 0 0 0 rgba(0,195,137,0) }
+    }
+
+    /* Section */
+    section { padding: 64px 0; border-top: 1px solid var(--border) }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px }
+    .section-head h2 { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.2rem) }
+    .section-head p { margin: 0; color: var(--muted) }
+
+    /* Cards */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow-soft);
+    }
+    .icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(180deg, #13203a, #0f1a30);
+      display: grid; place-items: center; color: var(--primary);
+      border: 1px solid #193055; margin-bottom: 12px;
+    }
+    .card h3 { margin: 6px 0 8px }
+    .card p { color: var(--muted) }
+
+    /* Timeline / About */
+    .about {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px;
+    }
+    .list { display: grid; gap: 16px }
+    .item { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start }
+    .item h4 { margin: 2px 0 6px }
+    .item p { margin: 0; color: var(--muted) }
+
+    /* Projects */
+    .project {
+      background: linear-gradient(180deg, #0f1629, #0b1120);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px;
+    }
+    .project .thumb {
+      aspect-ratio: 16/9; border-radius: 12px; background:
+        radial-gradient(120% 100% at 80% 0%, rgba(77,163,255,0.2) 0%, transparent 60%),
+        linear-gradient(180deg, #0c1527, #0a1220);
+      border: 1px solid #183055;
+      margin-bottom: 12px;
+    }
+
+    /* Contact */
+    .contact {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px;
+    }
+    form { display: grid; gap: 12px }
+    .field { display: grid; gap: 8px }
+    .field label { font-weight: 600 }
+    .field input, .field textarea {
+      background: #0c1427; color: var(--text); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 14px; font-size: 1rem;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: #6f86af }
+    .note { color: var(--muted); font-size: 0.95rem }
+
+    .contacts { display: grid; gap: 14px }
+    .link {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none;
+    }
+    .link:hover { background: #0c1427 }
+
+    /* Footer */
+    footer {
+      padding: 36px 0; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid, .about, .contact { grid-template-columns: 1fr }
+      .grid-3 { grid-template-columns: 1fr 1fr }
+    }
+    @media (max-width: 640px){
+      .menu { display: none }
+      .hamburger { display: inline-grid; place-items: center }
+      .grid-3, .grid-2 { grid-template-columns: 1fr }
+      .hero { padding-top: 70px }
+      .nav { height: 60px }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Header -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+            <img src="images/logo.png" alt="Logo dnamsy" style="height:40px;"/>
+        <div>dnamsy</div>
+    </div>
+      <nav class="menu" aria-label="Navigation principale">
+        <a href="#accueil">Accueil</a>
+        <a href="#services">Nos services</a>
+        <a href="#apropos">À propos</a>
+        <a href="#projets">Projets</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+      <button class="hamburger" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="accueil" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Digitaliser, sécuriser, connecter. Votre croissance, accélérée par la technologie.</h1>
+        <p>Nous concevons des solutions intelligentes qui automatisent vos processus, renforcent vos réseaux et valorisent vos données — avec un design technique, épuré et futuriste.</p>
+        <div class="actions">
+          <a href="#services"><button class="cta">Découvrir nos services</button></a>
+          <a href="#contact"><button class="ghost">Parler à un expert</button></a>
+        </div>
+
+        <div class="stat">
+          <div class="chip"><span class="pulse"></span> Opérations surveillées 24/7</div>
+          <div class="chip">Conformité RGPD & sécurité avancée</div>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-label="Aperçu technologique">
+        <div class="chip"><strong>Stack:</strong> IA • 5G • LPWAN • Fibre • SIEM</div>
+        <div style="height: 14px"></div>
+        <!-- Mini visualisation techno -->
+        <svg viewBox="0 0 520 220" width="100%" height="220" style="border-radius:12px; background:#0a1220; border:1px solid #183055">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4da3ff"/>
+              <stop offset="100%" stop-color="#7e5bf7"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00c389"/>
+              <stop offset="100%" stop-color="#4da3ff"/>
+            </linearGradient>
+          </defs>
+          <!-- Nodes -->
+          <circle cx="70" cy="60" r="10" fill="url(#g1)"/>
+          <circle cx="180" cy="40" r="10" fill="url(#g2)"/>
+          <circle cx="280" cy="90" r="10" fill="url(#g1)"/>
+          <circle cx="380" cy="50" r="10" fill="url(#g2)"/>
+          <circle cx="450" cy="110" r="10" fill="url(#g1)"/>
+          <!-- Links -->
+          <path d="M70 60 L180 40 L280 90 L380 50 L450 110" stroke="#234a85" stroke-width="2" fill="none"/>
+          <!-- Area -->
+          <path d="M60 150 C120 70, 240 130, 360 60 S 480 140, 520 100 L520 220 L0 220 Z" fill="rgba(77,163,255,0.12)" stroke="#1e365f" />
+        </svg>
+        <div class="stat">
+          <div class="chip"><strong>KPI:</strong> Latence < 10 ms</div>
+          <div class="chip"><strong>KPI:</strong> 99.99% disponibilité</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Nos services</h2>
+        <p>Des solutions de bout en bout, de la conception à l’exploitation.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- 1 Digitalisation intelligente -->
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>Digitalisation intelligente</h3>
+          <p>Nous déployons des systèmes d’IA et d’automatisation pour optimiser vos processus, réduire les tâches répétitives et améliorer la qualité opérationnelle. Cartographie des flux, RPA, intégration API et orchestration des données.</p>
+          <ul>
+            <li><strong>Automatisation:</strong> RPA, scripts, workflows</li>
+            <li><strong>Optimisation:</strong> analyse de processus, KPI, réingénierie</li>
+            <li><strong>IA:</strong> modèles prédictifs, NLP, assistants métiers</li>
+          </ul>
+        </div>
+
+        <!-- 2 Création de chatbots -->
+        <div class="card">
+          <div class="icon">💬</div>
+          <h3>Création de chatbots</h3>
+          <p>Nous concevons des chatbots personnalisés pour améliorer l’expérience client, automatiser le support et fluidifier la communication. Intégration sur sites web, applications et messageries instantanées.</p>
+          <ul>
+            <li><strong>Support client:</strong> réponses automatiques 24/7</li>
+            <li><strong>Intégration:</strong> WhatsApp, Messenger, web</li>
+            <li><strong>Personnalisation:</strong> ton, langage, scénarios métiers</li>
+          </ul>
+        </div>
+
+        <!-- 3 Agents intelligents -->
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>Agents intelligents</h3>
+          <p>Développement d’agents autonomes capables de prendre des décisions, d’interagir avec vos systèmes et d’optimiser vos processus métiers grâce à l’IA.</p>
+          <ul>
+            <li><strong>Automatisation:</strong> tâches complexes et multi-étapes</li>
+            <li><strong>Interaction:</strong> API, ERP, CRM</li>
+            <li><strong>IA avancée:</strong> raisonnement, apprentissage continu</li>
+          </ul>
+        </div>
+
+        <!-- 4 Traitement de données -->
+        <div class="card">
+          <div class="icon">📊</div>
+          <h3>Traitement de données</h3>
+          <p>Collecte, préparation, analyse et visualisation. Nous transformons vos données en décisions utiles grâce à des pipelines robustes et des tableaux de bord clairs.</p>
+          <ul>
+            <li><strong>Ingestion:</strong> ETL/ELT, streaming</li>
+            <li><strong>Analyse:</strong> BI, statistiques, ML</li>
+            <li><strong>Valorisation:</strong> dashboards, data products</li>
+          </ul>
+        </div>
+
+        <!-- 5 Data Science -->
+        <div class="card">
+           <div class="icon">📈</div>
+           <h3>Data Science</h3>
+           <p>Exploitation des données pour générer des insights stratégiques. Nous appliquons des méthodes statistiques et de machine learning pour transformer vos données en valeur.</p>
+           <ul>
+             <li><strong>Analyse:</strong> exploration, corrélations, tendances</li>
+             <li><strong>Machine Learning:</strong> modèles prédictifs et classification</li>
+             <li><strong>Visualisation:</strong> dashboards interactifs et storytelling</li>
+           </ul>
+        </div>
+
+
+        <!-- 6 Télécommunications -->
+        <div class="card">
+          <div class="icon">📡</div>
+          <h3>Télécommunications</h3>
+          <p>Conception et déploiement de réseaux hétérogènes alliant 5G, LPWAN et infrastructure IP. Ingénierie radio, planification de capacité, supervision et performances garanties.</p>
+          <ul>
+            <li><strong>5G:</strong> architecture, slicing, QoS</li>
+            <li><strong>LPWAN:</strong> LoRaWAN, NB-IoT pour capteurs</li>
+            <li><strong>Réseaux:</strong> routage, SD-WAN, monitoring</li>
+          </ul>
+        </div>
+
+        <!-- 7 Fibre optique -->
+        <div class="card">
+          <div class="icon">🧵</div>
+          <h3>Fibre optique</h3>
+          <p>Études, installation, deploiement et maintenance FTTH/FTTx avec mesures et certification. Conseil sur le choix des équipements et la résilience des liaisons.</p>
+          <ul>
+            <li><strong>Installation:</strong> tirage, soudure, boîtiers</li>
+            <li><strong>Maintenance:</strong> OTDR, inspection, SLA</li>
+            <li><strong>Conseils:</strong> design, redondance, continuité</li>
+          </ul>
+        </div>
+
+        <!-- 8 Cybersécurité -->
+        <div class="card">
+          <div class="icon">🛡️</div>
+          <h3>Cybersécurité</h3>
+          <p>Protection de bout en bout : audits, durcissement, surveillance en temps réel et réponse aux incidents. Conformité et gouvernance adaptées à votre secteur.</p>
+          <ul>
+            <li><strong>Audits:</strong> pentests, revue de configuration</li>
+            <li><strong>Surveillance:</strong> SIEM, détection avancée</li>
+            <li><strong>Protection:</strong> IAM, chiffrement, sauvegardes</li>
+          </ul>
+        </div>
+
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos -->
+  <section id="apropos">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>À propos</h2>
+        <p>Vision claire, mission ambitieuse, expertise éprouvée.</p>
+      </div>
+
+      <div class="about">
+        <div class="card">
+          <div class="list">
+            <div class="item">
+              <div class="icon">🌐</div>
+              <div>
+                <h4>Vision</h4>
+                <p>Rendre les technologies avancées accessibles et fiables, pour une économie plus efficace, sécurisée et durable.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon">🎯</div>
+              <div>
+                <h4>Mission</h4>
+                <p>Concevoir, déployer et opérer des solutions intégrées qui digitalisent vos métiers, sécurisent vos actifs et libèrent la valeur de vos données.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon">💡</div>
+              <div>
+                <h4>Expertise</h4>
+                <p>Ingénieurs réseaux, data et cybersécurité, avec expérience multi-sectorielle (télécoms, finance, industrie, services).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Approche</h3>
+          <p>Nous travaillons en cycles courts, mesurables et transparents : diagnostic, design, pilotes, industrialisation, puis amélioration continue.</p>
+          <div class="grid-2">
+            <div>
+              <ul>
+                <li><strong>Co-création:</strong> ateliers et maquettes</li>
+                <li><strong>Sécurité by design:</strong> risques maîtrisés</li>
+                <li><strong>Résultats:</strong> KPIs orientés impact</li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li><strong>Cloud & edge:</strong> architectures hybrides</li>
+                <li><strong>Observabilité:</strong> métriques et traces</li>
+                <li><strong>Support:</strong> run 24/7 avec SLA</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projets (facultatif) -->
+  <section id="projets">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Projets & réalisations</h2>
+        <p>Quelques exemples représentatifs de nos interventions.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="project">
+          <div class="thumb"></div>
+          <h3>Réseau IoT multi-sites</h3>
+          <p>Déploiement LPWAN pour capteurs industriels avec passerelles redondantes, monitoring temps réel et réduction de 30% des coûts d’exploitation.</p>
+        </div>
+        <div class="project">
+          <div class="thumb"></div>
+          <h3>Automatisation back-office</h3>
+          <p>RPA et intégration API pour le traitement documentaire, gains de productivité x2 et diminution des erreurs critiques.</p>
+        </div>
+        <div class="project">
+          <div class="thumb"></div>
+          <h3>Programme cybersécurité</h3>
+          <p>Audit, durcissement et SOC léger avec SIEM, amélioration du temps de détection et réponse de 65%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p>Parlez-nous de votre projet. Nous répondons rapidement.</p>
+      </div>
+
+      <div class="contact">
+        <div class="card">
+          <form id="contactForm" novalidate>
+            <div class="field">
+              <label for="name">Nom complet</label>
+              <input type="text" id="name" name="name" placeholder="Ex. Marie Kouadio" required />
+            </div>
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="vous@entreprise.com" required />
+            </div>
+            <div class="field">
+              <label for="phone">Téléphone</label>
+              <input type="tel" id="phone" name="phone" placeholder="+225 XX XX XX XX" />
+            </div>
+            <div class="field">
+              <label for="message">Votre message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Décrivez vos besoins…" required></textarea>
+            </div>
+            <button type="submit" class="cta">Envoyer</button>
+            <p class="note">En envoyant, vous acceptez d’être recontacté par notre équipe. Vos données sont traitées avec confidentialité.</p>
+          </form>
+        </div>
+
+        <div class="card contacts">
+          <a class="link" href="mailto:dnamsy007@gmail.com" aria-label="Envoyer un e-mail">
+            <span class="icon">✉️</span> dnamsy007@gmail.com
+          </a>
+          <a class="link" href="tel:+2250102030405" aria-label="Appeler">
+            <span class="icon">📞</span> +225 0713804963
+          </a>
+          <a class="link" href="https://wa.me/2250713804963" target="_blank" rel="noopener" aria-label="Ouvrir WhatsApp">
+            <span class="icon">💬</span> WhatsApp
+          </a>
+          <div class="note">Basés à Abidjan, nous intervenons en Côte d’Ivoire et à l’international.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div>© <span id="year"></span> NovaTech — Tous droits réservés.</div>
+        <div>Mentions légales • Politique de confidentialité</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Minimal JS -->
+  <script>
+    // Année dynamique
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Menu mobile
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.querySelector('.menu');
+    toggle?.addEventListener('click', () => {
+      const isOpen = nav.style.display === 'flex';
+      nav.style.display = isOpen ? 'none' : 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.gap = '10px';
+      nav.style.background = '#0c1427';
+      nav.style.position = 'absolute';
+      nav.style.right = '24px';
+      nav.style.top = '64px';
+      nav.style.padding = '12px';
+      nav.style.border = '1px solid var(--border)';
+      nav.style.borderRadius = '12px';
+    });
+
+    // Faux envoi de formulaire (à relier à un backend)
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      // Validation minimale
+      const errors = [];
+      if (!data.name?.trim()) errors.push('Le nom est requis.');
+      if (!data.email?.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errors.push('Un e-mail valide est requis.');
+      if (!data.message?.trim()) errors.push('Le message est requis.');
+
+      if (errors.length) {
+        alert('Veuillez corriger:\n- ' + errors.join('\n- '));
+        return;
+      }
+
+      alert('Merci ! Votre message a bien été envoyé. Nous vous recontactons très vite.');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
